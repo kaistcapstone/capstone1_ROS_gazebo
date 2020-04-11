@@ -67,7 +67,7 @@
         <collision name='field_collision'>
           <geometry>
             <mesh>
-              <uri>/home/humanlab/capstone1_ROS_gazebo/src/turtlebot3_gazebo/worlds/map_final_3.stl</uri>
+              <uri>file://worlds/map_final_3.stl</uri>
               <scale>0.1 0.1 0.1</scale>
             </mesh>
           </geometry>
@@ -93,7 +93,7 @@
         <visual name='field_visual'>
           <geometry>
             <mesh>
-              <uri>/home/humanlab/capstone1_ROS_gazebo/src/turtlebot3_gazebo/worlds/map_final_3.stl</uri>
+              <uri>file://worlds/map_final_3.stl</uri>
               <scale>0.1 0.1 0.1</scale>
             </mesh>
           </geometry>
@@ -116,7 +116,7 @@
         <visual name='field_visual'>
           <geometry>
             <mesh>
-              <uri>/home/humanlab/capstone1_ROS_gazebo/src/turtlebot3_gazebo/worlds/map_final_3_onlyline.stl</uri>
+              <uri>file://worlds/map_final_3_onlyline.stl</uri>
               <scale>0.1 0.1 0.1</scale>
             </mesh>
           </geometry>
@@ -139,7 +139,7 @@
         <visual name='field_visual'>
           <geometry>
             <mesh>
-              <uri>/home/humanlab/capstone1_ROS_gazebo/src/turtlebot3_gazebo/worlds/map_final_3_goalline.stl</uri>
+              <uri>file://worlds/map_final_3_goalline.stl</uri>
               <scale>0.1 0.1 0.1</scale>
             </mesh>
           </geometry>
