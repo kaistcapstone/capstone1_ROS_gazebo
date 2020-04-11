@@ -1,8 +1,4 @@
 <launch>
-  <arg name="model" default="waffle" doc="model type [burger, waffle, waffle_pi]"/>
-  <arg name="x_pos" default="3.0"/>
-  <arg name="y_pos" default="3.0"/>
-  <arg name="z_pos" default="0.8"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/map_final_3_jh.world"/>
