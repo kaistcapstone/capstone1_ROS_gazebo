@@ -10,21 +10,22 @@
 using namespace cv;
 using namespace std;
 
-Mat buffer(320,240,CV_8UC1);
+Mat buffer;
 ros::Publisher pub;
 ros::Publisher pub_markers;
 
 void ball_detect(){
      Mat edges;  //assign a memory to save the edge images
      Mat frame;  //assign a memory to save the images
+     Mat mask,mask1, mask2;
 
-     if(buffer.size().width==320){ //if the size of the image is 320x240, then resized it to 640x480
-         cv::resize(buffer, frame, cv::Size(640, 480));
-     }
-     else{
-         frame = buffer;
-     }
-     Canny(frame,edges,50,200); //proceed edge detection
+     frame = buffer;
+     cvtColor(frame, frame, COLOR_BGR2HSV);
+     inRange(frame, Scalar(0, 70, 50), Scalar(10, 255, 255), mask1);
+     inRange(frame, Scalar(170, 70, 50), Scalar(180, 255, 255), mask2);
+
+     mask = mask1 | mask2;
+     Canny(mask,edges,50,200); //proceed edge detection
 
      vector<Vec3f> circles; //assign a memory to save the result of circle detection
      HoughCircles(edges,circles,HOUGH_GRADIENT, 1, 50, 200, 20, 3, 25); //proceed circle detection
@@ -65,10 +66,10 @@ void ball_detect(){
          r=cvRound(params[2]); //radius
          // 원 출력을 위한 원 중심 생성
          Point center(cx,cy);  //declare a Point
-         circle(frame,center,r,Scalar(0,0,255),10); //draw a circle on 'frame' based on the information given,   r = radius, Scalar(0,0,255) means color, 10 means lineWidth
+         circle(buffer,center,r,Scalar(0,0,255),10); //draw a circle on 'frame' based on the information given,   r = radius, Scalar(0,0,255) means color, 10 means lineWidth
 
-         cy = 3.839*(exp(-0.03284*cy))+1.245*(exp(-0.00554*cy));   //convert the position of the ball in camera coordinate to the position in base coordinate. It is related to the calibration process. You shoould modify this.
-         cx = (0.002667*cy+0.0003)*cx-(0.9275*cy+0.114);
+         // cy = 3.839*(exp(-0.03284*cy))+1.245*(exp(-0.00554*cy));   //convert the position of the ball in camera coordinate to the position in base coordinate. It is related to the calibration process. You shoould modify this.
+         // cx = (0.002667*cy+0.0003)*cx-(0.9275*cy+0.114);
 
          msg.img_x[k]=cx;  //input the x position of the ball to the message
          msg.img_y[k]=cy;
@@ -86,7 +87,7 @@ void ball_detect(){
 	 c.a = 1.0;
 	 ball_list.colors.push_back(c);
      }
-     cv::imshow("view", frame);  //show the image with a window
+     cv::imshow("view", buffer);  //show the image with a window
      cv::waitKey(1);
      pub.publish(msg);  //publish a message
      pub_markers.publish(ball_list);  //publish a marker message
@@ -96,13 +97,6 @@ void ball_detect(){
 void imageCallback(const sensor_msgs::ImageConstPtr& msg)
 {
 
-   if(msg->height==480&&buffer.size().width==320){  //check the size of the image received. if the image have 640x480, then change the buffer size to 640x480.
-	std::cout<<"resized"<<std::endl;
-	cv::resize(buffer,buffer,cv::Size(640,480));
-}
-   else{
-	//do nothing!
-   }
 
    try
    {
@@ -121,7 +115,7 @@ int main(int argc, char **argv)
    ros::init(argc, argv, "ball_detect_node"); //init ros nodd
    ros::NodeHandle nh; //create node handler
    image_transport::ImageTransport it(nh); //create image transport and connect it to node hnalder
-   image_transport::Subscriber sub = it.subscribe("/camera/rgb/image_raw", 1, imageCallback); //create subscriber
+   image_transport::Subscriber sub = it.subscribe("camera/image", 1, imageCallback); //create subscriber
 
    pub = nh.advertise<core_msgs::ball_position>("/position", 100); //setting publisher
    pub_markers = nh.advertise<visualization_msgs::Marker>("/balls",1);

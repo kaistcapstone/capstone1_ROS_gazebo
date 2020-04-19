@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>turtlebot3_gazebo</name>
+  <name>map_generate</name>
   <version>1.2.0</version>
   <description>
     Gazebo simulation package for the TurtleBot3
