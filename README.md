@@ -24,19 +24,15 @@ catkin_make
 
 map open
 ```
-roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
+roslaunch map_generate import_world.launch
 ```
 swapn the robot
 ```
- roslaunch turtlebot3_gazebo test.launch
+roslaunch turtlebot3_description spawn_turtlebot3.launch
 ```
 launch the controller_manager
 ```
-roslaunch junny_control junny_control_without_actuator.launch
-```
-or
-```
-roslaunch junny_control junny_control_with_actuator.launch
+roslaunch junny_control junny_control.launch
 ```
 steer the robot
 ```
@@ -54,6 +50,5 @@ a: angular velocity increase to clockwise
 s: stop
 d: angular velocity increase to counter-clockwise
 x: linear velocity decrease
-q: actuator actuation
-e: actuator return to origin position
 ```
+
