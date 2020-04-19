@@ -19,7 +19,7 @@
 
 float MAP_CX = 200.5;
 float MAP_CY = 200.5;
-float MAP_RESOL = 0.05;             // Map resoultion [cm]
+float MAP_RESOL = 0.015;             // Map resoultion [cm]
 int MAP_WIDTH = 400;
 int MAP_HEIGHT = 400;
 int MAP_CENTER = 50;
@@ -58,12 +58,13 @@ void camera_Callback(const core_msgs::ball_position::ConstPtr& position)
     {
         ball_X[i] = position->img_x[i];
         ball_Y[i]=position->img_y[i];
+      	std::cout << "ball_X : "<< ball_X[i];
+      	std::cout << "ball_Y : "<< ball_Y[i]<<std::endl;
     }
     map_mutex.unlock();
 }
 void lidar_Callback(const sensor_msgs::LaserScan::ConstPtr& scan)
 {
-    std::cout << "   distance : "<< std::endl;
     map_mutex.lock();
     int count = scan->angle_max / scan->angle_increment;
     lidar_size=count;
@@ -71,8 +72,8 @@ void lidar_Callback(const sensor_msgs::LaserScan::ConstPtr& scan)
     {
         lidar_degree[i] = scan->angle_min + scan->angle_increment * i;
         lidar_distance[i]=scan->ranges[i];
-        std::cout << "degree : "<< lidar_degree[i];
-        std::cout << "   distance : "<< lidar_distance[i]<<std::endl;
+        // std::cout << "degree : "<< lidar_degree[i];
+        // std::cout << "   distance : "<< lidar_distance[i]<<std::endl;
     }
     map_mutex.unlock();
 
@@ -114,8 +115,8 @@ int main(int argc, char **argv)
         // Drawing ball
         for(int i = 0; i < ball_number; i++)
         {
-            cx = MAP_WIDTH/2 + (int)(ball_X[i]/MAP_RESOL);
-            cy = MAP_HEIGHT/2 - (int)(ball_Y[i]/MAP_RESOL);
+            cx =(int)(ball_X[i]/4);
+            cy =(int)(ball_Y[i]/4);
             cx1 = cx-OBSTACLE_PADDING*2;
             cy1 = cy-OBSTACLE_PADDING*2;
             cx2 = cx+OBSTACLE_PADDING*2;

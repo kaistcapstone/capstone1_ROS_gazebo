@@ -22,7 +22,6 @@ void ball_detect(){
      cvtColor(buffer, gray, CV_RGB2GRAY);
      gray=~gray;
 
-     cv::bitwise_and( gray, gray, res,mask );
 
 
      vector<Vec3f> circles; //assign a memory to save the result of circle detection
@@ -86,7 +85,6 @@ void ball_detect(){
 	 ball_list.colors.push_back(c);
      }
      cv::imshow("view", buffer);  //show the image with a window
-     cv::imshow("view1", gray);  //show the image with a window
 
      cv::waitKey(1);
      pub.publish(msg);  //publish a message
