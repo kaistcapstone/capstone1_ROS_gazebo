@@ -52,4 +52,13 @@ s: stop
 d: angular velocity increase to counter-clockwise
 x: linear velocity decrease
 ```
+detect and publish ball position from camera image
+```
+rosrun ball_detection ball_detect_node
+```
+draw the lidar data and ball position
+```
+rosrun data_integrate data_show_node
+```
+
 
