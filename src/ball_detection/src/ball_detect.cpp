@@ -15,20 +15,18 @@ ros::Publisher pub;
 ros::Publisher pub_markers;
 
 void ball_detect(){
-     Mat edges;  //assign a memory to save the edge images
+     Mat gray;  //assign a memory to save the edge images
      Mat frame;  //assign a memory to save the images
      Mat mask,mask1, mask2;
 
-     frame = buffer;
-     cvtColor(frame, frame, COLOR_BGR2HSV);
-     inRange(frame, Scalar(0, 70, 50), Scalar(10, 255, 255), mask1);
-     inRange(frame, Scalar(170, 70, 50), Scalar(180, 255, 255), mask2);
+     cvtColor(buffer, gray, CV_RGB2GRAY);
+     gray=~gray;
 
-     mask = mask1 | mask2;
-     Canny(mask,edges,50,200); //proceed edge detection
+     cv::bitwise_and( gray, gray, res,mask );
+
 
      vector<Vec3f> circles; //assign a memory to save the result of circle detection
-     HoughCircles(edges,circles,HOUGH_GRADIENT, 1, 50, 200, 20, 3, 25); //proceed circle detection
+     HoughCircles(gray,circles,HOUGH_GRADIENT, 1, 20, 50, 35, 0,0); //proceed circle detection
      Vec3f params; //assign a memory to save the information of circles
      float cx,cy,r;
      cout<<"circles.size="<<circles.size()<<endl;  //print the number of circles detected
@@ -88,6 +86,8 @@ void ball_detect(){
 	 ball_list.colors.push_back(c);
      }
      cv::imshow("view", buffer);  //show the image with a window
+     cv::imshow("view1", gray);  //show the image with a window
+
      cv::waitKey(1);
      pub.publish(msg);  //publish a message
      pub_markers.publish(ball_list);  //publish a marker message
@@ -115,7 +115,7 @@ int main(int argc, char **argv)
    ros::init(argc, argv, "ball_detect_node"); //init ros nodd
    ros::NodeHandle nh; //create node handler
    image_transport::ImageTransport it(nh); //create image transport and connect it to node hnalder
-   image_transport::Subscriber sub = it.subscribe("camera/image", 1, imageCallback); //create subscriber
+   image_transport::Subscriber sub = it.subscribe("/camera/rgb/image_raw", 1, imageCallback); //create subscriber
 
    pub = nh.advertise<core_msgs::ball_position>("/position", 100); //setting publisher
    pub_markers = nh.advertise<visualization_msgs::Marker>("/balls",1);
