@@ -13,4 +13,19 @@ turtlebot3_waffle_sim:
     type: effort_controllers/JointVelocityController
     joint: wheel_right_joint
     pid: {p: 1.0, i: 0.001, d: 0.01}
-
+  suspension_one:
+    type: effort_controllers/JointPositionController
+    joint: left_caster_joint
+    pid: {p: 100, i: 0.0000, d: 30}
+  suspension_two:
+    type: effort_controllers/JointPositionController
+    joint: right_caster_joint
+    pid: {p: 100, i: 0.0000, d: 30}
+  suspension_three:
+    type: effort_controllers/JointPositionController
+    joint: left_suspension_joint
+    pid: {p: 100, i: 0.0000, d: 30}
+  suspension_four:
+    type: effort_controllers/JointPositionController
+    joint: right_suspension_joint
+    pid: {p: 100, i: 0.0000, d: 30}

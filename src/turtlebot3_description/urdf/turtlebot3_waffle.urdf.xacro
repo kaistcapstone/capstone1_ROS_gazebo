@@ -99,8 +99,8 @@
     <child link="left_suspension_link"/>
     <origin xyz="0.0 0.154 -0.01" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.02" upper="0" effort="4" velocity="0.5"/>
-    <dynamics damping="0.6" friction="0.3"/>
+    <limit lower="-0.04" upper="0" effort="1000" velocity="1000"/>
+    <dynamics damping="0.0" friction="0.0"/>
   </joint>
 
   <link name="left_suspension_link">
@@ -157,8 +157,8 @@
     <child link="right_suspension_link"/>
     <origin xyz="0.0 -0.154 -0.01" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.02" upper="0" effort="4" velocity="0.5"/>
-    <dynamics damping="0.6" friction="0.3"/>
+    <limit lower="-0.04" upper="0" effort="1000" velocity="1000"/>
+    <dynamics damping="0.0" friction="0.0"/>
   </joint>
 
   <link name="right_suspension_link">
@@ -223,8 +223,8 @@
     <child link="left_caster_link"/>
     <origin xyz="-0.177 0.064 -0.02" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.01" upper="0" effort="4" velocity="0.5"/>
-    <dynamics damping="0.6" friction="0.3"/>
+    <limit lower="-0.04" upper="0" effort="1000" velocity="1000"/>
+    <dynamics damping="0.0" friction="0.0"/>
   </joint>
 
   <link name="left_caster_link">
@@ -234,6 +234,14 @@
         <sphere radius="0.02"/>
       </geometry>
     </collision>
+
+    <visual>
+      <origin xyz="0 0.001 0" rpy="-1.57 0 0"/>
+      <geometry>
+        <sphere radius="0.02"/>
+      </geometry>
+    </visual>
+
 
     <inertial>
       <origin xyz="0 0 0" />
@@ -251,8 +259,8 @@
     <child link="right_caster_link"/>
     <origin xyz="-0.177 -0.064 -0.02" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.01" upper="0" effort="4" velocity="0.5"/>
-    <dynamics damping="0.6" friction="0.3"/>
+    <limit lower="-0.04" upper="0" effort="1000" velocity="1000"/>
+    <dynamics damping="0.0" friction="0.0"/>
   </joint>
 
   <link name="right_caster_link">
@@ -262,6 +270,13 @@
         <sphere radius="0.02"/>
       </geometry>
     </collision>
+
+    <visual>
+      <origin xyz="0 0.001 0" rpy="-1.57 0 0"/>
+      <geometry>
+        <sphere radius="0.02"/>
+      </geometry>
+    </visual>
 
     <inertial>
       <origin xyz="0 0 0" />

@@ -7,7 +7,11 @@
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
 	output="screen" ns="/turtlebot3_waffle_sim" args="joint_state_controller
 					  left_wheel_velocity_controller
-					  right_wheel_velocity_controller"/>
+					  right_wheel_velocity_controller
+					  suspension_one
+					  suspension_two
+					  suspension_three
+					  suspension_four"/>
 
   <!-- convert joint states to TF transforms for rviz, etc -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
